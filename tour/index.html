@@ -240,9 +240,29 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#back-on-the-tour-bus" class="md-nav__link">
-    Back on the Tour Bus
+  <a href="#functions" class="md-nav__link">
+    Functions
   </a>
+  
+    <nav class="md-nav" aria-label="Functions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#global-functions" class="md-nav__link">
+    Global Functions
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#invocable-data-types" class="md-nav__link">
+    Invocable Data Types
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -542,7 +562,7 @@
 <p>If you'd like, <a href="../usage/repl/">start up a PiLisp REPL</a> and evaluate
 expressions as we go.</p>
 </div>
-<p>PiLisp supports a subset of Clojure's syntax. <a href="https://clojure.org">Clojure</a> is
+<p>PiLisp supports a large subset of Clojure's syntax. <a href="https://clojure.org">Clojure</a> is
 a Lisp, but with fewer parentheses than most, because Rich Hickey took advantage
 of other delimiters like square brackets and curly braces.</p>
 <div class="language-clojure highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="mi">1</span><span class="w">    </span><span class="c1">; number</span>
@@ -576,14 +596,66 @@ understanding:</p>
 </span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="mi">73</span>
 </span></code></pre></div>
 <p><strong>Now we can get back to the language tour.</strong></p>
-<h2 id="back-on-the-tour-bus">Back on the Tour Bus<a class="headerlink" href="#back-on-the-tour-bus" title="Permanent link">#</a></h2>
+<h2 id="functions">Functions<a class="headerlink" href="#functions" title="Permanent link">#</a></h2>
+<p>PiLisp is a functional Lisp. For one, this means it treats functions as values.</p>
 <p>A lot of things are invocable in PiLisp.</p>
+<h3 id="global-functions">Global Functions<a class="headerlink" href="#global-functions" title="Permanent link">#</a></h3>
+<p>Since PiLisp does not provide namespaces or any kind of module facility, all
+functions that are bound to names in the environment are global.</p>
+<p>You can define a global function using the <code>def</code> special form or <code>defn</code> macro:</p>
+<div class="language-clojure highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="p">(</span><span class="kd">defn </span><span class="nv">point</span><span class="w"> </span><span class="p">[</span><span class="nv">x</span><span class="w"> </span><span class="nv">y</span><span class="p">]</span><span class="w"> </span><span class="p">{</span><span class="nv">.x</span><span class="w"> </span><span class="nv">x</span><span class="w"> </span><span class="nv">.y</span><span class="w"> </span><span class="nv">y</span><span class="p">})</span>
+</span></code></pre></div>
+<p>You can invoke the function either with parentheses or, if you're at the REPL or using the <code>pl&gt;</code> by hand, without parentheses:</p>
+<div class="language-clojure highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="p">(</span><span class="nf">point</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="p">)</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="c1">;;=&gt;</span>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="c1">;; {</span>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="c1">;;   :x 2,</span>
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="c1">;;   :y 3,</span>
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="c1">;; }</span>
+</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>
+</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="c1">;; At REPL</span>
+</span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="nv">pl&gt;</span><span class="w"> </span><span class="nv">point</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span>
+</span><span id="__span-4-10"><a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a><span class="c1">;;=&gt;</span>
+</span><span id="__span-4-11"><a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a><span class="c1">;; {</span>
+</span><span id="__span-4-12"><a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a><span class="c1">;;   :x 2,</span>
+</span><span id="__span-4-13"><a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a><span class="c1">;;   :y 3,</span>
+</span><span id="__span-4-14"><a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a><span class="c1">;; }</span>
+</span></code></pre></div>
+<p>Notice two additional things:</p>
+<ol>
+<li>Commas are whitespace. We didn't have to use them when defining <code>point</code>.</li>
+<li>Terms can be written with either a leading colon or dot, but they're always
+printed with the colon.</li>
+</ol>
+<p>Evaluate <code>(bindings)</code> to see all of the bindings in the
+current PiLisp environment. You can further refine this to functions:</p>
+<div class="language-clojure highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="p">(</span><span class="kd">defn </span><span class="nv">fn-binding?</span><span class="w"> </span><span class="p">[</span><span class="nv">binding-entry</span><span class="p">]</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="w">  </span><span class="p">(</span><span class="k">let </span><span class="p">[[</span><span class="nb">symbol </span><span class="nv">binding</span><span class="p">]</span><span class="w"> </span><span class="nv">binding-entry</span><span class="p">]</span>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">    </span><span class="p">(</span><span class="nf">fn?</span><span class="w"> </span><span class="p">(</span><span class="ss">:value</span><span class="w"> </span><span class="nv">binding</span><span class="p">))))</span>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="c1">;;=&gt; #&lt;function: fn-binding?&gt;</span>
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>
+</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="p">(</span><span class="nb">count </span><span class="p">(</span><span class="nb">filter </span><span class="nv">fn-binding?</span><span class="w"> </span><span class="p">(</span><span class="nf">bindings</span><span class="p">)))</span>
+</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="c1">;;=&gt; 878</span>
+</span></code></pre></div>
+<p>Functions, however, aren't the only invocable data types.</p>
+<h3 id="invocable-data-types">Invocable Data Types<a class="headerlink" href="#invocable-data-types" title="Permanent link">#</a></h3>
 <p>Terms and strings will look themselves up in associative collections:</p>
-<div class="language-clojure highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="nv">pl&gt;</span><span class="w"> </span><span class="p">(</span><span class="nf">.a</span><span class="w"> </span><span class="p">{</span><span class="nv">.a</span><span class="w"> </span><span class="s">&quot;alpha&quot;</span><span class="w"> </span><span class="nv">.b</span><span class="w"> </span><span class="s">&quot;beta&quot;</span><span class="p">})</span>
-</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="s">&quot;alpha&quot;</span>
-</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>
-</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="nv">pl&gt;</span><span class="w"> </span><span class="p">(</span><span class="s">&quot;name&quot;</span><span class="w"> </span><span class="p">{</span><span class="s">&quot;name&quot;</span><span class="w"> </span><span class="s">&quot;PiLisp&quot;</span><span class="w"> </span><span class="s">&quot;host&quot;</span><span class="w"> </span><span class="s">&quot;Dart&quot;</span><span class="p">})</span>
-</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="s">&quot;PiLisp&quot;</span>
+<div class="language-clojure highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="nv">pl&gt;</span><span class="w"> </span><span class="p">(</span><span class="nf">.a</span><span class="w"> </span><span class="p">{</span><span class="nv">.a</span><span class="w"> </span><span class="s">&quot;alpha&quot;</span><span class="w"> </span><span class="nv">.b</span><span class="w"> </span><span class="s">&quot;beta&quot;</span><span class="p">})</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="s">&quot;alpha&quot;</span>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="nv">pl&gt;</span><span class="w"> </span><span class="p">(</span><span class="s">&quot;name&quot;</span><span class="w"> </span><span class="p">{</span><span class="s">&quot;name&quot;</span><span class="w"> </span><span class="s">&quot;PiLisp&quot;</span><span class="w"> </span><span class="s">&quot;host&quot;</span><span class="w"> </span><span class="s">&quot;Dart&quot;</span><span class="p">})</span>
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="s">&quot;PiLisp&quot;</span>
+</span></code></pre></div>
+<p>Collections are functions: vectors of their indices, maps of their keys, sets of
+their members:</p>
+<div class="language-clojure highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="p">([</span><span class="nv">.a</span><span class="w"> </span><span class="nv">.b</span><span class="w"> </span><span class="nv">.c</span><span class="w"> </span><span class="nv">.d</span><span class="p">]</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="c1">;;=&gt; :c</span>
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="p">({</span><span class="nv">.alpha</span><span class="w"> </span><span class="s">&quot;a&quot;</span><span class="w"> </span><span class="nv">.beta</span><span class="w"> </span><span class="s">&quot;b&quot;</span><span class="p">}</span><span class="w"> </span><span class="nv">.beta</span><span class="p">)</span>
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="c1">;;=&gt; &quot;b&quot;</span>
+</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>
+</span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="p">(</span><span class="o">#</span><span class="p">{</span><span class="s">&quot;I&quot;</span><span class="w"> </span><span class="s">&quot;you&quot;</span><span class="w"> </span><span class="s">&quot;we&quot;</span><span class="w"> </span><span class="s">&quot;y&#39;all&quot;</span><span class="p">}</span><span class="w"> </span><span class="s">&quot;y&#39;all&quot;</span><span class="p">)</span>
+</span><span id="__span-7-8"><a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="c1">;;=&gt; &quot;y&#39;all&quot;</span>
 </span></code></pre></div>
 
 
